@@ -1,0 +1,178 @@
+Microsoft Windows [Version 10.0.26100.8875]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Lenovo>cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin>mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 14
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> CREATE DATABASE sekolah;
+ERROR 1007 (HY000): Can't create database 'sekolah'; database exists
+MariaDB [(none)]> USE sekolah;
+Database changed
+MariaDB [sekolah]> CREATE TABLE siswa (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nama VARCHAR(100),
+    ->     kelas VARCHAR(20),
+    ->    alamat VARCHAR(100)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 5
+MariaDB [sekolah]> CREATE TABLE siswa (
+    ->     id INT AUTO_INCREMENT PRIMARY KEY,
+    ->     nama VARCHAR(100),
+    ->     kelas VARCHAR(20),
+    ->     kelas VARCHAR(20),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 5
+MariaDB [sekolah]> CREATE TABLE siswa (
+    ->    id INT AUTO_INCREMENT PRIMARY KEY,
+    ->    nama VARCHAR(100),
+    ->    kelas VARCHAR(20),
+    ->    alamat VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.017 sec)
+
+MariaDB [sekolah]> INSERT INTO siswa (nama, kelas, alamat) VALUES
+    -> ('Aidil', 'XI RPL 1', 'Medan'),
+    -> ('Maul', 'XI RPL 1', 'Binjai'),
+    -> ('Najmi', 'XI RPL 2', 'Lubuk Pakam'),
+    -> ('Goji', 'XI RPL 2', 'Medan'),
+    -> ('Jaka', 'XI RPL 1', 'Tebing Tinggi');
+Query OK, 5 rows affected (0.055 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [sekolah]> SELECT * FROM siswa;
++----+-------+----------+---------------+
+| id | nama  | kelas    | alamat        |
++----+-------+----------+---------------+
+|  1 | Aidil | XI RPL 1 | Medan         |
+|  2 | Maul  | XI RPL 1 | Binjai        |
+|  3 | Najmi | XI RPL 2 | Lubuk Pakam   |
+|  4 | Goji  | XI RPL 2 | Medan         |
+|  5 | Jaka  | XI RPL 1 | Tebing Tinggi |
++----+-------+----------+---------------+
+5 rows in set (0.009 sec)
+
+MariaDB [sekolah]> SELECT nama, kelas FROM siswa;
++-------+----------+
+| nama  | kelas    |
++-------+----------+
+| Aidil | XI RPL 1 |
+| Maul  | XI RPL 1 |
+| Najmi | XI RPL 2 |
+| Goji  | XI RPL 2 |
+| Jaka  | XI RPL 1 |
++-------+----------+
+5 rows in set (0.000 sec)
+
+MariaDB [sekolah]> SELECT * FROM siswa
+    -> WHERE alamat = 'Medan';
++----+-------+----------+--------+
+| id | nama  | kelas    | alamat |
++----+-------+----------+--------+
+|  1 | Aidil | XI RPL 1 | Medan  |
+|  4 | Goji  | XI RPL 2 | Medan  |
++----+-------+----------+--------+
+2 rows in set (0.007 sec)
+
+MariaDB [sekolah]> UPDATE siswa
+    -> SET alamat = 'Pematangsiantar'
+    -> WHERE id = 1;
+Query OK, 1 row affected (0.009 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [sekolah]> SELECT * FROM siswa;
++----+-------+----------+-----------------+
+| id | nama  | kelas    | alamat          |
++----+-------+----------+-----------------+
+|  1 | Aidil | XI RPL 1 | Pematangsiantar |
+|  2 | Maul  | XI RPL 1 | Binjai          |
+|  3 | Najmi | XI RPL 2 | Lubuk Pakam     |
+|  4 | Goji  | XI RPL 2 | Medan           |
+|  5 | Jaka  | XI RPL 1 | Tebing Tinggi   |
++----+-------+----------+-----------------+
+5 rows in set (0.001 sec)
+
+MariaDB [sekolah]> DELETE FROM siswa
+    -> WHERE id = 5;
+Query OK, 1 row affected (0.006 sec)
+
+MariaDB [sekolah]> SELECT * FROM siswa;
++----+-------+----------+-----------------+
+| id | nama  | kelas    | alamat          |
++----+-------+----------+-----------------+
+|  1 | Aidil | XI RPL 1 | Pematangsiantar |
+|  2 | Maul  | XI RPL 1 | Binjai          |
+|  3 | Najmi | XI RPL 2 | Lubuk Pakam     |
+|  4 | Goji  | XI RPL 2 | Medan           |
++----+-------+----------+-----------------+
+4 rows in set (0.000 sec)
+
+MariaDB [sekolah]> SELECT * FROM siswa
+    -> ORDER BY nama ASC;
++----+-------+----------+-----------------+
+| id | nama  | kelas    | alamat          |
++----+-------+----------+-----------------+
+|  1 | Aidil | XI RPL 1 | Pematangsiantar |
+|  4 | Goji  | XI RPL 2 | Medan           |
+|  2 | Maul  | XI RPL 1 | Binjai          |
+|  3 | Najmi | XI RPL 2 | Lubuk Pakam     |
++----+-------+----------+-----------------+
+4 rows in set (0.004 sec)
+
+MariaDB [sekolah]> SELECT COUNT(*) AS jumlah_siswa
+    -> FROM siswa;
++--------------+
+| jumlah_siswa |
++--------------+
+|            4 |
++--------------+
+1 row in set (0.015 sec)
+
+MariaDB [sekolah]> DESC siswa;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nama   | varchar(100) | YES  |     | NULL    |                |
+| kelas  | varchar(20)  | YES  |     | NULL    |                |
+| alamat | varchar(100) | YES  |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+4 rows in set (0.031 sec)
+
+MariaDB [sekolah]> SHOW TABLES;
++-------------------+
+| Tables_in_sekolah |
++-------------------+
+| siswa             |
++-------------------+
+1 row in set (0.005 sec)
+
+MariaDB [sekolah]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| biodata_siswa      |
+| db_sekolah         |
+| db_user_login      |
+| ecommerce_atk      |
+| ecommerce_atk2     |
+| information_schema |
+| jelita             |
+| klinik_sederhana   |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| sekola             |
+| sekolah            |
+| sekolah3           |
+| sekolah_pengaduan  |
++--------------------+
+15 rows in set (0.052 sec)
